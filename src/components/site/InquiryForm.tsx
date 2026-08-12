@@ -22,11 +22,11 @@ export function InquiryForm({ locale }: { locale: Locale }) {
     const value = (key: string) => String(form.get(key) ?? "").trim();
 
     const nextErrors: Record<string, string> = {};
-    if (!value("first_name")) nextErrors.first_name = copy.required;
-    if (!value("email")) nextErrors.email = copy.required;
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value("email"))) nextErrors.email = copy.invalidEmail;
-    if (!value("phone")) nextErrors.phone = copy.required;
-    if (!form.get("privacy")) nextErrors.privacy = copy.mustAccept;
+    if (!value("first_name")) nextErrors["first_name"] = copy.required;
+    if (!value("email")) nextErrors["email"] = copy.required;
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value("email"))) nextErrors["email"] = copy.invalidEmail;
+    if (!value("phone")) nextErrors["phone"] = copy.required;
+    if (!form.get("privacy")) nextErrors["privacy"] = copy.mustAccept;
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
@@ -56,10 +56,10 @@ export function InquiryForm({ locale }: { locale: Locale }) {
 
   return (
     <form onSubmit={onSubmit} noValidate className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
-      <Field label={copy.firstName} name="first_name" error={errors.first_name} required />
+      <Field label={copy.firstName} name="first_name" error={errors["first_name"]} required />
       <Field label={copy.lastName} name="last_name" />
-      <Field label={copy.email} name="email" type="email" error={errors.email} required />
-      <Field label={copy.phone} name="phone" type="tel" error={errors.phone} required />
+      <Field label={copy.email} name="email" type="email" error={errors["email"]} required />
+      <Field label={copy.phone} name="phone" type="tel" error={errors["phone"]} required />
       <Field label={copy.date} name="wedding_date" type="date" />
       <Field label={copy.guests} name="guests" inputMode="numeric" />
       <Field label={copy.venue} name="venue" />
@@ -114,7 +114,7 @@ export function InquiryForm({ locale }: { locale: Locale }) {
             </Link>
           </span>
         </label>
-        {errors.privacy ? <p className="mt-2 text-xs text-destructive">{errors.privacy}</p> : null}
+        {errors["privacy"] ? <p className="mt-2 text-xs text-destructive">{errors["privacy"]}</p> : null}
       </div>
 
       <div className="sm:col-span-2">
@@ -141,10 +141,10 @@ function Field({
 }: {
   label: string;
   name: string;
-  type?: string;
-  error?: string;
-  required?: boolean;
-  inputMode?: "numeric";
+  type?: string | undefined;
+  error?: string | undefined;
+  required?: boolean | undefined;
+  inputMode?: "numeric" | undefined;
 }) {
   return (
     <div>

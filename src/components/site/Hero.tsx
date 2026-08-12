@@ -3,7 +3,7 @@ import { t, type Locale } from "@/lib/i18n";
 import { pick, type PageSection } from "@/lib/content";
 
 interface HeroProps {
-  section?: PageSection;
+  section?: PageSection | undefined;
   locale: Locale;
 }
 
