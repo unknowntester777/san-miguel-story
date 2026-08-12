@@ -10,11 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GraciasRouteImport } from './routes/gracias'
 import { Route as EnIndexRouteImport } from './routes/en.index'
+import { Route as EnThankYouRouteImport } from './routes/en.thank-you'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GraciasRoute = GraciasRouteImport.update({
+  id: '/gracias',
+  path: '/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnIndexRoute = EnIndexRouteImport.update({
@@ -22,30 +29,43 @@ const EnIndexRoute = EnIndexRouteImport.update({
   path: '/en/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnThankYouRoute = EnThankYouRouteImport.update({
+  id: '/en/thank-you',
+  path: '/en/thank-you',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/gracias': typeof GraciasRoute
+  '/en/thank-you': typeof EnThankYouRoute
   '/en/': typeof EnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/gracias': typeof GraciasRoute
+  '/en/thank-you': typeof EnThankYouRoute
   '/en': typeof EnIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/gracias': typeof GraciasRoute
+  '/en/thank-you': typeof EnThankYouRoute
   '/en/': typeof EnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/en/'
+  fullPaths: '/' | '/gracias' | '/en/thank-you' | '/en/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/en'
-  id: '__root__' | '/' | '/en/'
+  to: '/' | '/gracias' | '/en/thank-you' | '/en'
+  id: '__root__' | '/' | '/gracias' | '/en/thank-you' | '/en/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GraciasRoute: typeof GraciasRoute
+  EnThankYouRoute: typeof EnThankYouRoute
   EnIndexRoute: typeof EnIndexRoute
 }
 
@@ -58,6 +78,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/gracias': {
+      id: '/gracias'
+      path: '/gracias'
+      fullPath: '/gracias'
+      preLoaderRoute: typeof GraciasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/en/': {
       id: '/en/'
       path: '/en'
@@ -65,11 +92,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en/thank-you': {
+      id: '/en/thank-you'
+      path: '/en/thank-you'
+      fullPath: '/en/thank-you'
+      preLoaderRoute: typeof EnThankYouRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GraciasRoute: GraciasRoute,
+  EnThankYouRoute: EnThankYouRoute,
   EnIndexRoute: EnIndexRoute,
 }
 export const routeTree = rootRouteImport
