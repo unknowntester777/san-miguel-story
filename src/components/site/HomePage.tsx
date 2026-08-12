@@ -36,7 +36,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             <div>
               <p className="eyebrow">{pick(s("intro"), "eyebrow", locale)}</p>
               <div className="mt-8 flex gap-8">
-                {copy.pillars("map")((pillar) => (
+                {copy.pillars.map((pillar) => (
                   <span
                     key={pillar}
                     className="text-[0.68rem] uppercase tracking-[0.2em] text-muted-foreground"
@@ -68,7 +68,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         </section>
 
         {/* Real weddings */}
-        {data.weddings("length") > 0 ? (
+        {data.weddings.length > 0 ? (
           <section id="bodas" className="scroll-mt-24 bg-secondary/50 section-y">
             <div className="container-editorial">
               <SectionHeading
@@ -77,7 +77,7 @@ export function HomePage({ locale }: { locale: Locale }) {
                 body={pick(s("weddings"), "body", locale)}
               />
               <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
-                {data.weddings("slice")(0, 3).map((wedding) => (
+                {data.weddings.slice(0, 3).map((wedding) => (
                   <WeddingCard key={wedding.id} wedding={wedding} locale={locale} />
                 ))}
               </div>
@@ -94,7 +94,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               body={pick(s("experience"), "body", locale)}
             />
             <ol className="mt-14 grid gap-10 md:grid-cols-4 md:gap-8">
-              {copy.steps("map")((step) => (
+              {copy.steps.map((step) => (
                 <li key={step.n} className="border-t border-border pt-6">
                   <span className="text-[0.68rem] tracking-[0.2em] text-muted-foreground">
                     {step.n}
@@ -114,7 +114,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               <div className="relative aspect-[4/5] bg-secondary">
                 {s("sanmiguel")?.image_url ? (
                   <img
-                    src={s("sanmiguel").image_url}
+                    src={s("sanmiguel")!.image_url}
                     alt={pick(s("sanmiguel"), "image_alt", locale)}
                     loading="lazy"
                     decoding="async"
@@ -131,9 +131,9 @@ export function HomePage({ locale }: { locale: Locale }) {
               </div>
             </div>
 
-            {data.venues("length") > 0 ? (
+            {data.venues.length > 0 ? (
               <div className="mt-20 grid gap-10 md:grid-cols-3 md:gap-8">
-                {data.venues("slice")(0, 6).map((venue) => (
+                {data.venues.slice(0, 6).map((venue) => (
                   <VenueCard key={venue.id} venue={venue} locale={locale} />
                 ))}
               </div>
@@ -142,7 +142,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         </section>
 
         {/* Testimonials */}
-        {data.testimonials("length") > 0 ? (
+        {data.testimonials.length > 0 ? (
           <section className="bg-ink text-primary-foreground section-y">
             <div className="container-editorial">
               <p className="eyebrow !text-primary-foreground/50">
@@ -157,7 +157,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         ) : null}
 
         {/* FAQ */}
-        {data.faqs("length") > 0 ? (
+        {data.faqs.length > 0 ? (
           <section id="preguntas" className="scroll-mt-24 section-y">
             <div className="container-editorial grid gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
               <SectionHeading
@@ -181,8 +181,8 @@ export function HomePage({ locale }: { locale: Locale }) {
               <div className="mt-10 space-y-3 text-sm">
                 {settings?.email ? (
                   <p>
-                    <a href={`mailto:${settings("email")}`} className="link-underline">
-                      {settings("email")}
+                    <a href={`mailto:${settings.email}`} className="link-underline">
+                      {settings.email}
                     </a>
                   </p>
                 ) : null}
