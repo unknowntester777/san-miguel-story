@@ -114,7 +114,7 @@ export function HomePage({ locale }: { locale: Locale }) {
               <div className="relative aspect-[4/5] bg-secondary">
                 {s("sanmiguel")?.image_url ? (
                   <img
-                    src={s("sanmiguel")!.image_url}
+                    src={s("sanmiguel")?.image_url ?? undefined}
                     alt={pick(s("sanmiguel"), "image_alt", locale)}
                     loading="lazy"
                     decoding="async"
