@@ -6,14 +6,14 @@ import type { Locale } from "@/lib/i18n";
 
 /** Asymmetric editorial composition: each index maps to a deliberate grid cell. */
 const SPANS = [
-  "md:col-span-7 md:row-span-2 aspect-[4/5] md:aspect-[4/3]",
-  "md:col-span-5 aspect-[3/4]",
-  "md:col-span-5 aspect-[4/3]",
-  "md:col-span-5 aspect-[3/4]",
-  "md:col-span-7 aspect-[16/10]",
-  "md:col-span-7 aspect-[16/10]",
-  "md:col-span-5 aspect-square",
-  "md:col-span-12 aspect-[16/9]",
+  "aspect-[4/5] md:aspect-auto md:col-span-7 md:row-span-4",
+  "aspect-[4/5] md:aspect-auto md:col-span-5 md:row-span-4",
+  "aspect-[4/5] md:aspect-auto md:col-span-5 md:row-span-3",
+  "aspect-[4/5] md:aspect-auto md:col-span-7 md:row-span-3",
+  "aspect-[4/5] md:aspect-auto md:col-span-7 md:row-span-4",
+  "aspect-[4/5] md:aspect-auto md:col-span-5 md:row-span-4",
+  "aspect-[4/5] md:aspect-auto md:col-span-4 md:row-span-3",
+  "aspect-[4/5] md:aspect-auto md:col-span-8 md:row-span-3",
 ];
 
 export function EditorialGallery({
@@ -54,7 +54,7 @@ export function EditorialGallery({
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-12 md:gap-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-12 md:auto-rows-[8.5rem] md:gap-4">
         {items.map((item, index) => (
           <button
             key={item.id}
