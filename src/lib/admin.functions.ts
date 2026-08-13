@@ -27,7 +27,7 @@ const ORDER_COLUMN: Record<AdminTable, string> = {
   inquiries: "created_at",
 };
 
-type Row = Record<string, unknown>;
+export type Row = Record<string, string | number | boolean | null>;
 
 export const adminIsAdmin = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
@@ -46,7 +46,7 @@ export const adminList = createServerFn({ method: "GET" })
       .select("*")
       .order(column, { ascending: data.table !== "inquiries" });
     if (error) throw new Error(error.message);
-    return (rows ?? []) as Row[];
+    return (rows ?? []) as unknown as Row[];
   });
 
 export const adminSave = createServerFn({ method: "POST" })
@@ -60,8 +60,8 @@ export const adminSave = createServerFn({ method: "POST" })
     if (!isUpdate) delete row["id"];
 
     const query = isUpdate
-      ? context.supabase.from(data.table).update(row).eq("id", row["id"] as string)
-      : context.supabase.from(data.table).insert(row);
+      ? context.supabase.from(data.table).update(row as never).eq("id", row["id"] as string)
+      : context.supabase.from(data.table).insert(row as never);
 
     const { error } = await query;
     if (error) throw new Error(error.message);
