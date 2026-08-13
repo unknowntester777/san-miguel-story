@@ -10,9 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AvisoDePrivacidadRouteImport } from './routes/aviso-de-privacidad'
 import { Route as GraciasRouteImport } from './routes/gracias'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as EnIndexRouteImport } from './routes/en.index'
 import { Route as EnPrivacyRouteImport } from './routes/en.privacy'
 import { Route as EnThankYouRouteImport } from './routes/en.thank-you'
@@ -20,6 +23,15 @@ import { Route as EnThankYouRouteImport } from './routes/en.thank-you'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AvisoDePrivacidadRoute = AvisoDePrivacidadRouteImport.update({
@@ -36,6 +48,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const EnIndexRoute = EnIndexRouteImport.update({
   id: '/en/',
@@ -55,18 +72,22 @@ const EnThankYouRoute = EnThankYouRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
   '/gracias': typeof GraciasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/en/privacy': typeof EnPrivacyRoute
   '/en/thank-you': typeof EnThankYouRoute
   '/en/': typeof EnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
   '/gracias': typeof GraciasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/en/privacy': typeof EnPrivacyRoute
   '/en/thank-you': typeof EnThankYouRoute
   '/en': typeof EnIndexRoute
@@ -74,9 +95,12 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
   '/gracias': typeof GraciasRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/en/privacy': typeof EnPrivacyRoute
   '/en/thank-you': typeof EnThankYouRoute
   '/en/': typeof EnIndexRoute
@@ -85,27 +109,34 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/aviso-de-privacidad'
     | '/gracias'
     | '/sitemap.xml'
+    | '/admin'
     | '/en/privacy'
     | '/en/thank-you'
     | '/en/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/aviso-de-privacidad'
     | '/gracias'
     | '/sitemap.xml'
+    | '/admin'
     | '/en/privacy'
     | '/en/thank-you'
     | '/en'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/aviso-de-privacidad'
     | '/gracias'
     | '/sitemap.xml'
+    | '/_authenticated/admin'
     | '/en/privacy'
     | '/en/thank-you'
     | '/en/'
@@ -113,6 +144,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   AvisoDePrivacidadRoute: typeof AvisoDePrivacidadRoute
   GraciasRoute: typeof GraciasRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -128,6 +161,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/aviso-de-privacidad': {
@@ -150,6 +197,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/en/': {
       id: '/en/'
@@ -175,8 +229,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   AvisoDePrivacidadRoute: AvisoDePrivacidadRoute,
   GraciasRoute: GraciasRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

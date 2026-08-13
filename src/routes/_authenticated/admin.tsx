@@ -235,7 +235,7 @@ function RecordForm({
   value: Row;
   saving: boolean;
   onSubmit: (row: Row) => void;
-  onCancel?: () => void;
+  onCancel?: (() => void) | undefined;
 }) {
   const [row, setRow] = useState<Row>(value);
   useEffect(() => setRow(value), [value]);
