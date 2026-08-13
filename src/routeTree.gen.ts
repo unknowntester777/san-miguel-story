@@ -10,8 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AvisoDePrivacidadRouteImport } from './routes/aviso-de-privacidad'
 import { Route as GraciasRouteImport } from './routes/gracias'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as EnIndexRouteImport } from './routes/en.index'
+import { Route as EnPrivacyRouteImport } from './routes/en.privacy'
 import { Route as EnThankYouRouteImport } from './routes/en.thank-you'
 
 const IndexRoute = IndexRouteImport.update({
@@ -19,14 +22,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AvisoDePrivacidadRoute = AvisoDePrivacidadRouteImport.update({
+  id: '/aviso-de-privacidad',
+  path: '/aviso-de-privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GraciasRoute = GraciasRouteImport.update({
   id: '/gracias',
   path: '/gracias',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EnIndexRoute = EnIndexRouteImport.update({
   id: '/en/',
   path: '/en/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnPrivacyRoute = EnPrivacyRouteImport.update({
+  id: '/en/privacy',
+  path: '/en/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnThankYouRoute = EnThankYouRouteImport.update({
@@ -37,34 +55,68 @@ const EnThankYouRoute = EnThankYouRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
   '/gracias': typeof GraciasRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/en/privacy': typeof EnPrivacyRoute
   '/en/thank-you': typeof EnThankYouRoute
   '/en/': typeof EnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
   '/gracias': typeof GraciasRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/en/privacy': typeof EnPrivacyRoute
   '/en/thank-you': typeof EnThankYouRoute
   '/en': typeof EnIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aviso-de-privacidad': typeof AvisoDePrivacidadRoute
   '/gracias': typeof GraciasRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/en/privacy': typeof EnPrivacyRoute
   '/en/thank-you': typeof EnThankYouRoute
   '/en/': typeof EnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/gracias' | '/en/thank-you' | '/en/'
+  fullPaths:
+    | '/'
+    | '/aviso-de-privacidad'
+    | '/gracias'
+    | '/sitemap.xml'
+    | '/en/privacy'
+    | '/en/thank-you'
+    | '/en/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/gracias' | '/en/thank-you' | '/en'
-  id: '__root__' | '/' | '/gracias' | '/en/thank-you' | '/en/'
+  to:
+    | '/'
+    | '/aviso-de-privacidad'
+    | '/gracias'
+    | '/sitemap.xml'
+    | '/en/privacy'
+    | '/en/thank-you'
+    | '/en'
+  id:
+    | '__root__'
+    | '/'
+    | '/aviso-de-privacidad'
+    | '/gracias'
+    | '/sitemap.xml'
+    | '/en/privacy'
+    | '/en/thank-you'
+    | '/en/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AvisoDePrivacidadRoute: typeof AvisoDePrivacidadRoute
   GraciasRoute: typeof GraciasRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  EnPrivacyRoute: typeof EnPrivacyRoute
   EnThankYouRoute: typeof EnThankYouRoute
   EnIndexRoute: typeof EnIndexRoute
 }
@@ -78,6 +130,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aviso-de-privacidad': {
+      id: '/aviso-de-privacidad'
+      path: '/aviso-de-privacidad'
+      fullPath: '/aviso-de-privacidad'
+      preLoaderRoute: typeof AvisoDePrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/gracias': {
       id: '/gracias'
       path: '/gracias'
@@ -85,11 +144,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GraciasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/en/': {
       id: '/en/'
       path: '/en'
       fullPath: '/en/'
       preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/privacy': {
+      id: '/en/privacy'
+      path: '/en/privacy'
+      fullPath: '/en/privacy'
+      preLoaderRoute: typeof EnPrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/en/thank-you': {
@@ -104,7 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AvisoDePrivacidadRoute: AvisoDePrivacidadRoute,
   GraciasRoute: GraciasRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  EnPrivacyRoute: EnPrivacyRoute,
   EnThankYouRoute: EnThankYouRoute,
   EnIndexRoute: EnIndexRoute,
 }
